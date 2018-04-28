@@ -1,0 +1,10 @@
+F:\angularsecurity\ptcapi\obj\MCD\Debug\netcoreapp2.0\PtcApi.csproj.CoreCompileInputs.cache
+F:\angularsecurity\ptcapi\obj\MCD\Debug\netcoreapp2.0\PtcApi.AssemblyInfoInputs.cache
+F:\angularsecurity\ptcapi\obj\MCD\Debug\netcoreapp2.0\PtcApi.AssemblyInfo.cs
+F:\angularsecurity\ptcapi\bin\MCD\Debug\netcoreapp2.0\PtcApi.deps.json
+F:\angularsecurity\ptcapi\bin\MCD\Debug\netcoreapp2.0\PtcApi.runtimeconfig.json
+F:\angularsecurity\ptcapi\bin\MCD\Debug\netcoreapp2.0\PtcApi.runtimeconfig.dev.json
+F:\angularsecurity\ptcapi\bin\MCD\Debug\netcoreapp2.0\PtcApi.dll
+F:\angularsecurity\ptcapi\bin\MCD\Debug\netcoreapp2.0\PtcApi.pdb
+F:\angularsecurity\ptcapi\obj\MCD\Debug\netcoreapp2.0\PtcApi.dll
+F:\angularsecurity\ptcapi\obj\MCD\Debug\netcoreapp2.0\PtcApi.pdb
