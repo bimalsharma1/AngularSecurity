@@ -72,20 +72,7 @@ namespace PtcApi.Security
             ret.BearerToken = new Guid().ToString();
 
             //get all claims from this user
-            claims = GetUserClaims(authUser);
-
-            //loop through all claims and set properties of user object
-            foreach (AppUserClaim claim in claims)
-            {
-                try 
-                {
-                    //TODO: check data type of claim value
-                    typeof(AppUserAuth).GetProperty(claim.ClaimType)
-                        .SetValue(ret, Convert.ToBoolean(claim.ClaimValue), null);
-                }
-                catch {}
-            }
-
+            ret.Claims = GetUserClaims(authUser);
             ret.BearerToken = BuildJwtToken(ret);
             return ret;
         }
@@ -106,31 +93,28 @@ namespace PtcApi.Security
             //add custom claims
             jwtClaims.Add(new Claim("isAuthenticated",
                 authUser.IsAuthenticated.ToString().ToLower()));
-            jwtClaims.Add(new Claim("canAddProduct",
-                authUser.CanAddProduct.ToString().ToLower()));
-            jwtClaims.Add(new Claim("canAddProduct",
-                authUser.CanAddProduct.ToString().ToLower()));
-            jwtClaims.Add(new Claim("canAccessCategories",
-                authUser.CanAccessCategories.ToString().ToLower()));
-            jwtClaims.Add(new Claim("canAddCategory",
-                authUser.CanAddCategory.ToString().ToLower()));
+            //add custom claims from claims array
+            foreach(var claim in authUser.Claims) {
+                jwtClaims.Add(new Claim(claim.ClaimType, claim.ClaimValue));
+            }
 
-                //create jetsecuritytoken object
-                var token = new JwtSecurityToken(
-                    issuer: _settings.Issuer,
-                    audience: _settings.Audience,
-                    claims: jwtClaims,
-                    notBefore: DateTime.UtcNow.AddMinutes(
-                        _settings.MinutesToExpiration),
-                    expires:DateTime.UtcNow.AddMinutes(
-                        _settings.MinutesToExpiration),
-                    signingCredentials:new SigningCredentials(key,
-                            SecurityAlgorithms.HmacSha256)
 
-                );
+            //create jetsecuritytoken object
+            var token = new JwtSecurityToken(
+                issuer: _settings.Issuer,
+                audience: _settings.Audience,
+                claims: jwtClaims,
+                notBefore: DateTime.UtcNow.AddMinutes(
+                    _settings.MinutesToExpiration),
+                expires:DateTime.UtcNow.AddMinutes(
+                    _settings.MinutesToExpiration),
+                signingCredentials:new SigningCredentials(key,
+                        SecurityAlgorithms.HmacSha256)
 
-                //create string representation of jwt token
-                return new JwtSecurityTokenHandler().WriteToken(token);
+            );
+
+            //create string representation of jwt token
+            return new JwtSecurityTokenHandler().WriteToken(token);
 
         }
 
