@@ -8,6 +8,7 @@ namespace PtcApi.Model
     public DbSet<Category> Categories { get; set; }
     public DbSet<AppUser> Users { get; set; }
     public DbSet<AppUserClaim> Claims { get; set; }
+    public DbSet<Menu> Menus { get; set; }
 
     // private const string CONN =
     //               @"Server=Localhost;
@@ -15,8 +16,8 @@ namespace PtcApi.Model
     //                 Trusted_Connection=True;
     //                 MultipleActiveResultSets=true";
 
-    private const string CONN = @"Server=(localdb)\MSSQLLocalDB;
-    Database=PTC-Pluralsight;
+    private const string CONN = @"Server=.\SQLEXPRESS01;
+    Database=PTC-Pluralsight;Trusted_Connection=True;
     AttachDbFilename=F:\AngularSecurity\SqlData\PTC-Pluralsight.mdf;
     MultipleActiveResultSets=true";
 
