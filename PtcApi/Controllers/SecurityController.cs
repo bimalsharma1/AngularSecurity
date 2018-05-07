@@ -36,5 +36,27 @@ namespace PtcApi.Controllers
 
       return ret;
     }
+
+ 
+    [HttpPost("join")]
+    public IActionResult Join([FromBody]AppUser user)
+    {
+      IActionResult ret = null;
+      AppUserAuth auth = new AppUserAuth();
+      SecurityManager mgr = new SecurityManager(_settings);
+
+      auth = mgr.GetNewUserClaims(user);
+      if(auth.IsAuthenticated) {
+          ret = StatusCode(StatusCodes.Status200OK, auth);
+      }
+      else
+      {
+          ret = StatusCode(StatusCodes.Status404NotFound,
+          "Invalid user details");
+      }
+
+
+      return ret;
+    }
   }
 }

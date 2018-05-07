@@ -38,6 +38,44 @@ namespace PtcApi.Security
             return ret;
         }
 
+        public AppUserAuth GetNewUserClaims(AppUser user)
+        {
+            AppUserAuth ret = new AppUserAuth();
+            AppUser authUser = null;
+            try
+            {
+                using (var db = new PtcDbContext())
+                {
+                    if (user != null)
+                    {
+                        db.Users.Add(user);
+                        db.SaveChanges();
+
+                        authUser = db.Users.Where(
+                            u => u.UserName.ToLower() == user.UserName.ToLower()
+                            && u.Password == user.Password).FirstOrDefault();
+
+                        AppUserClaim userClaim = new AppUserClaim();
+                        userClaim.UserId = authUser.UserId;
+                        userClaim.ClaimType = "CanAccessMenu";
+                        userClaim.ClaimValue = "true";
+
+                        db.Claims.Add(userClaim);
+                        db.SaveChanges();
+
+                        if(authUser != null) {
+                            //build usersecurity object
+                            ret = BuildUserAuthObject(authUser);
+                        }  
+                    }
+                }
+            } catch (Exception ex) {
+                throw new Exception(
+                    "Exception trying to create new user.", ex);
+            }
+            return ret;
+        }
+
         protected List<AppUserClaim> GetUserClaims(AppUser authUser)
         {
             List<AppUserClaim> list = new List<AppUserClaim>();

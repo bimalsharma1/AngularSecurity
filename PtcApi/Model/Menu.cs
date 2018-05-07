@@ -26,6 +26,6 @@ namespace PtcApi.Model
     public string SurchargeMessage { get; set; }
 
   
-    public System.Drawing MenuPicture { get; set; }
+    public string MenuPicture { get; set; }
   }
 }
